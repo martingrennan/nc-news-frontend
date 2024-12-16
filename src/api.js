@@ -11,3 +11,19 @@ export const getArticles = (categoryName) => {
         return data.articles;
       });
   };
+
+export const getArticleByID = (articleID) => {
+    return api
+      .get(`/articles/${articleID}`)
+      .then(({ data }) => {
+        return data.articles;
+      });
+    };
+
+export const getComments = (articleID) => {
+      return api
+        .get(`/articles/${articleID}/comments`)
+        .then(({ data }) => {
+          return data.comments;
+        });
+      };
