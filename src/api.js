@@ -32,8 +32,10 @@ export const downvoteArticle = (articleID) => {
   return api.patch(`/articles/${articleID}`, { inc_votes: -1 })
 };
 
-export const postComment = (articleID) => {
-  return api.post(`/articles/${articleID}/comments`)
+export const postComment = (articleID, commentBody) => {
+  return api.post(`/articles/${articleID}/comments`, commentBody).then(() => {
+    console.log('posted')
+})
 }
 
 export const getUsers = () => {

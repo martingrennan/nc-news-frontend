@@ -7,6 +7,7 @@ const CommentCard = ({ comment }) => {
     <div>
       <p>{comment.author} said: {comment.body} | {formattedTime} | {formattedDate} </p>
       <p>{comment.votes} votes</p>
+      <p>---------------------------------------------</p>
     </div>
   );
 };
