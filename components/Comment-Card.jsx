@@ -1,5 +1,4 @@
 const CommentCard = ({ comment }) => {
-
   return (
     <div>
       <p>{comment.author}:</p>
@@ -12,4 +11,6 @@ const CommentCard = ({ comment }) => {
 
 export default CommentCard;
 
-//comment_id, article_id, author, body, created_at, votes
+/*
+- change date format
+*/

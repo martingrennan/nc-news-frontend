@@ -1,16 +1,11 @@
 import { useNavigate } from "react-router";
-import ArticleByID from "./ArticleByID";
-import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router";
 
 const ArticleCard = ({ article }) => {
   const navigate = useNavigate();
-  const [articleID, setArticleID] = useState(0)
 
   const submitArticleID = (e) => {
-    e.preventDefault(); 
-    setArticleID(article.article_id)
-    navigate(`/article-by-id/${article.article_id}`); 
+    e.preventDefault();
+    navigate(`/article-by-id/${article.article_id}`);
   };
 
   return (
@@ -23,6 +18,7 @@ const ArticleCard = ({ article }) => {
       />
       <p onClick={submitArticleID}>{article.title}</p>
       <p> posted by {article.author}</p>
+      <p>{article.votes} votes</p>
       <p>{article.topic}</p>
       <p>{article.comment_count} comments</p>
     </div>

@@ -16,7 +16,6 @@ function App() {
         <Route path="/articles" element={<Articles/>}></Route>
         <Route path="/article-by-id/:articleID" element={<ArticleByID />}></Route>
       </Routes>
-      {/* <Articles></Articles> */}
       <Footer></Footer>
     </>
   );

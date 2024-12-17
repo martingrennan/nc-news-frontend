@@ -5,25 +5,34 @@ const api = axios.create({
 });
 
 export const getArticles = (categoryName) => {
-    return api
-      .get("/articles", { params: { category_name: categoryName } })
-      .then(({ data }) => {
-        return data.articles;
-      });
-  };
+  return api
+    .get("/articles", { params: { category_name: categoryName } })
+    .then(({ data }) => {
+      return data.articles;
+    });
+};
 
 export const getArticleByID = (articleID) => {
-    return api
-      .get(`/articles/${articleID}`)
-      .then(({ data }) => {
-        return data.articles;
-      });
-    };
+  return api.get(`/articles/${articleID}`).then(({ data }) => {
+    return data.articles;
+  });
+};
 
 export const getComments = (articleID) => {
-      return api
-        .get(`/articles/${articleID}/comments`)
-        .then(({ data }) => {
-          return data.comments;
-        });
-      };
+  return api.get(`/articles/${articleID}/comments`).then(({ data }) => {
+    return data.comments;
+  });
+};
+
+export const upvoteArticle = (articleID) => {
+  return api.patch(`/articles/${articleID}`, { inc_votes: 1 }).then(() => {
+    console.log("patched");
+  });
+};
+
+export const downvoteArticle = (articleID) => {
+  return api.patch(`/articles/${articleID}`, { inc_votes: -1 }).then(() => {
+    console.log("patched");
+  });
+};
+
