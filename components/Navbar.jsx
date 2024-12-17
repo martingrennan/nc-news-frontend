@@ -24,6 +24,9 @@ const Navbar = () => {
       <Link to="/">
         <button>Home</button>
       </Link>
+      <Link to="/articles">
+        <button>Start Scrolling!</button>
+      </Link>
       {/* <form action="submit.html" method="GET">
         <label htmlFor="article_id">Find an Article ID: </label>
         <input onChange={handleChange} type="number" id="article_id" name="article_id" required></input>
