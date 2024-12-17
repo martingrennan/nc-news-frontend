@@ -25,14 +25,19 @@ export const getComments = (articleID) => {
 };
 
 export const upvoteArticle = (articleID) => {
-  return api.patch(`/articles/${articleID}`, { inc_votes: 1 }).then(() => {
-    console.log("patched");
-  });
+  return api.patch(`/articles/${articleID}`, { inc_votes: 1 })
 };
 
 export const downvoteArticle = (articleID) => {
-  return api.patch(`/articles/${articleID}`, { inc_votes: -1 }).then(() => {
-    console.log("patched");
-  });
+  return api.patch(`/articles/${articleID}`, { inc_votes: -1 })
 };
 
+export const postComment = (articleID) => {
+  return api.post(`/articles/${articleID}/comments`)
+}
+
+export const getUsers = () => {
+  return api.get(`/users`).then(({ data }) => {
+    return data.users;
+  });
+};

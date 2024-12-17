@@ -1,9 +1,11 @@
 const CommentCard = ({ comment }) => {
+  const date = new Date(comment.created_at)
+  const formattedDate = date.toLocaleDateString('en-UK')
+  const formattedTime = date.toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit'})
+
   return (
     <div>
-      <p>{comment.author}:</p>
-      <p>{comment.body}</p>
-      <p>{comment.created_at}</p>
+      <p>{comment.author} said: {comment.body} | {formattedTime} | {formattedDate} </p>
       <p>{comment.votes} votes</p>
     </div>
   );

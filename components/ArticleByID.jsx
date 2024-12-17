@@ -9,11 +9,14 @@ const ArticleByID = () => {
   const [comments, setComments] = useState("");
   const [noInternet, setNoInternet] = useState(false);
   const [voteChange, setVoteChange] = useState(0);
+  const [isLoading, setIsLoading] = useState(false)
   const { articleID } = useParams();
 
   useEffect(() => {
+    setIsLoading(true)
     getArticleByID(articleID)
       .then((article) => {
+        setIsLoading(false)
         setArticle(article[0]);
       })
       .catch((err) => {
@@ -22,14 +25,20 @@ const ArticleByID = () => {
   }, [articleID]);
 
   useEffect(() => {
+    setIsLoading(true)
     getComments(articleID)
       .then((comments) => {
+        setIsLoading(false)
         setComments(comments);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [articleID]);
+
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
 
   function handleDownvoteArticle() {
     downvoteArticle(article.article_id).catch(() => {
@@ -64,11 +73,11 @@ const ArticleByID = () => {
       <p> posted by {article.author}</p>
 
       <p>{article.votes + voteChange} votes</p>
-      <button onClick={handleDownvoteArticle}>-</button>
-      <button onClick={handleUpvoteArticle}>+</button>
+      <button onClick={handleDownvoteArticle}>➖</button>
+      <button onClick={handleUpvoteArticle}>➕</button>
       {noInternet === true ? <p>No internet connection!</p> : null}
       <p>{article.topic}</p>
-      <p>{article.comment_count} comments</p>
+      <h4>{article.comment_count} comments</h4>
       {Array.isArray(comments) && comments.length > 0 ? (
         comments.map((comment) => {
           return <CommentCard key={comment.comment_id} comment={comment} />;
@@ -80,5 +89,3 @@ const ArticleByID = () => {
   );
 };
 export default ArticleByID;
-
-//      {!rating ? null : <p id="show-card-text"> Rating: {rating} </p>}

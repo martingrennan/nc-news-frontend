@@ -62,3 +62,8 @@ button:focus-visible {
   height: auto;
   padding: 10px;
 }
+
+.mini-avatar {
+  width: 20px; 
+  height: 'auto'
+}
