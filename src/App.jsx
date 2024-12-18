@@ -14,6 +14,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/articles" element={<Articles/>}></Route>
+        <Route path="/articles/:topic" element={<Articles/>}></Route>
         <Route path="/article-by-id/:articleID" element={<ArticleByID />}></Route>
         <Route path="log-in" element={<LogIn />}></Route>
       </Routes>

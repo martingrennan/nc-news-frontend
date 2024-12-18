@@ -90,9 +90,6 @@ const ArticleByID = () => {
   };
 
   const handleSubmitComment = (e) => {
-    // e.preventDefault();
-
-    // Prevent empty or already posting comments
     if (!commentBody.body.trim() || isPosting) return;
 
     setIsPosting(true);
