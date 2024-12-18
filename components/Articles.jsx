@@ -6,9 +6,10 @@ import { useParams } from "react-router";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
+  const { topic } = useParams();
 
   useEffect(() => {
-    getArticles()
+    getArticles(topic)
       .then((articles) => {
         setArticles(articles);
       })
