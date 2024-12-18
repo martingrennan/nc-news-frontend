@@ -4,9 +4,9 @@ const api = axios.create({
   baseURL: "https://nc-news-b3v0.onrender.com/api/",
 });
 
-export const getArticles = (topic) => {
+export const getArticles = (topic, sort_by, order) => {
   return api
-    .get("/articles", { params: { topic: topic } })
+    .get("/articles", { params: { topic, sort_by, order } })
     .then(({ data }) => {
       return data.articles;
     });
@@ -58,4 +58,12 @@ export const deleteComment = (commentID) => {
   });
 };
 
-//change
+/*
+QUESTIONS:
+
+- infinite loop of console.logs
+- change order to Newest/Oldest when sort is date
+- get user to stay logged in after post
+
+
+*/

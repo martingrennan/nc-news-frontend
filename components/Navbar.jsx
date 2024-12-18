@@ -43,10 +43,11 @@ const Navbar = () => {
         name="topic-dropdown"
         onChange={handleTopicChange}
       >
-        {topics.map((topic) => {
+        <option value="">Topics:</option>
+        {topics.map((topic, index) => {
           return (
             <>
-              <option value={`${topic.slug}`}>{topic.slug}</option>
+              <option key={index} value={`${topic.slug}`}>{topic.slug}</option>
             </>
           );
         })}
