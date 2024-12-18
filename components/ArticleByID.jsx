@@ -15,8 +15,8 @@ const ArticleByID = () => {
   const { user } = useContext(UserContext);
   const [commentBody, setCommentBody] = useState({});
   const { articleID } = useParams();
-  const currentTime = new Date();
 
+  //get article by ID
   useEffect(() => {
     setIsLoading(true);
     getArticleByID(articleID)
@@ -29,6 +29,7 @@ const ArticleByID = () => {
       });
   }, [articleID]);
 
+  //get comments for article
   useEffect(() => {
     setIsLoading(true);
     getComments(articleID)
