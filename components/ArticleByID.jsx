@@ -1,4 +1,9 @@
-import { getArticleByID, getComments, postComment } from "../src/api";
+import {
+  getArticleByID,
+  getComments,
+  postComment,
+  deleteComment,
+} from "../src/api";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { upvoteArticle, downvoteArticle } from "../src/api";
@@ -8,12 +13,15 @@ import { useContext } from "react";
 
 const ArticleByID = () => {
   const [article, setArticle] = useState([]);
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState([]);
   const [noInternet, setNoInternet] = useState(false);
   const [voteChange, setVoteChange] = useState(0);
+  const [deletedCommentID, setDeletedCommentID] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
   const { user } = useContext(UserContext);
   const [commentBody, setCommentBody] = useState({});
+  const [inputValue, setInputValue] = useState("");
   const { articleID } = useParams();
 
   //get article by ID
@@ -33,9 +41,9 @@ const ArticleByID = () => {
   useEffect(() => {
     setIsLoading(true);
     getComments(articleID)
-      .then((comments) => {
+      .then((commentsData) => {
         setIsLoading(false);
-        setComments(comments);
+        setComments(commentsData);
       })
       .catch((err) => {
         console.log(err);
@@ -73,24 +81,53 @@ const ArticleByID = () => {
   }
 
   const handleCommentTyping = (e) => {
+    setInputValue(e.target.value);
     setCommentBody({
       body: e.target.value,
       author: user.username
+      //change this back to user.username
     });
   };
-  console.log(commentBody)
+
   const handleSubmitComment = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+
+    // Prevent empty or already posting comments
+    if (!commentBody.body.trim() || isPosting) return;
+
+    setIsPosting(true);
     postComment(articleID, commentBody)
+      .then((postedComment) => {
+        setComments((prevComments) => [postedComment, ...prevComments]);
+        setInputValue("");
+        setIsPosting(false);
+      })
+      .catch((err) => {
+        setIsPosting(false);
+        console.log(err);
+      });
   };
 
+  const deleteOwnComment = (commentID) => {
+    console.log(commentID);
+    setDeletedCommentID(commentID);
+    deleteComment(commentID)
+      .then(() => {
+        setComments((currComments) => {
+          return currComments.filter((comment) => comment.comment_id !== commentID);
+        });
+      })
+      .catch((err) => {
+        setDeletedCommentID(null);
+        console.log(err);
+      });
+  };
 
   return (
     <>
       <img className="article-pic" src={article.article_img_url}></img>
       <h4>{article.title}</h4>
       <p> posted by {article.author}</p>
-
       <p>{article.votes + voteChange} votes</p>
       <button onClick={handleDownvoteArticle}>➖</button>
       <button onClick={handleUpvoteArticle}>➕</button>
@@ -103,24 +140,42 @@ const ArticleByID = () => {
         ) : (
           <>
             <h4>Add a new comment</h4>
-            <label htmlFor="message">Message: <br></br></label>
+            <label htmlFor="message">
+              Message: <br></br>
+            </label>
             <br></br>
-            <textarea id="message" name="message" rows="4" cols="50" onChange={handleCommentTyping} required></textarea>
-            <button type="submit" onClick={handleSubmitComment}>
-          Post Comment
-        </button>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              cols="50"
+              value={inputValue}
+              onChange={handleCommentTyping}
+              placeholder="Write your comment here..."
+              required
+            ></textarea>
+            <br></br>
+            <button
+              type="submit"
+              onClick={handleSubmitComment}
+              disabled={isPosting}
+            >
+              {isPosting === true ? "Posting..." : "Post Comment"}
+            </button>
           </>
         )}
       </form>
-      {Array.isArray(comments) && comments.length > 0 ? (
-        comments.map((comment) => {
-          return <CommentCard key={comment.comment_id} comment={comment} />;
-        })
+
+      {comments.length === 0 ? (
+        <p>No comments to display</p>
       ) : (
-        <p>No comments available</p>
+        <ul className="comments-list">
+          {comments.map((comment) => (
+            <CommentCard key={comment.comment_id} comment={comment} deleteOwnComment={deleteOwnComment} />
+          ))}
+        </ul>
       )}
     </>
   );
 };
 export default ArticleByID;
-
