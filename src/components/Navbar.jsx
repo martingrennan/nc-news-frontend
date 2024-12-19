@@ -2,8 +2,9 @@ import { Link } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 import { useState, useEffect } from "react";
-import { getTopics } from "../src/api";
+import { getTopics } from "../api";
 import { useNavigate } from "react-router";
+import React from 'react';
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -27,10 +28,12 @@ const Navbar = () => {
 
   const logOut = () => {
     setUser(null);
+    localStorage.removeItem('user')
   };
 
   return (
     <>
+    <nav className="navbar">
       <Link to="">
         <button>Home</button>
       </Link>
@@ -43,11 +46,11 @@ const Navbar = () => {
         name="topic-dropdown"
         onChange={handleTopicChange}
       >
-        <option value="">Topics:</option>
+        <option value="" key="0">Topics:</option>
         {topics.map((topic, index) => {
           return (
             <>
-              <option key={index} value={`${topic.slug}`}>{topic.slug}</option>
+              <option key={topic.slug} value={`${topic.slug}`}>{topic.slug}</option>
             </>
           );
         })}
@@ -60,6 +63,7 @@ const Navbar = () => {
         <button onClick={logOut}>Log Out</button>
       )}
       <br></br>
+      </nav>
     </>
   );
 };

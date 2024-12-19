@@ -1,4 +1,4 @@
-import { getUsers } from "../src/api";
+import { getUsers } from "../api";
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "./UserContext";
@@ -33,6 +33,7 @@ const LogIn = () => {
         setUserExists(true);
         setLoggedInUser(users[i]);
         setUser(users[i]);
+        localStorage.setItem('user', JSON.stringify(users[i]));
         userFound = true;
         break;
       }

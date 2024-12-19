@@ -4,9 +4,9 @@ const api = axios.create({
   baseURL: "https://nc-news-b3v0.onrender.com/api/",
 });
 
-export const getArticles = (topic, sort_by, order) => {
+export const getArticles = (topic, sort_by, order, p) => {
   return api
-    .get("/articles", { params: { topic, sort_by, order } })
+    .get("/articles", { params: { topic, sort_by, order, p } })
     .then(({ data }) => {
       return data.articles;
     });
@@ -61,9 +61,17 @@ export const deleteComment = (commentID) => {
 /*
 QUESTIONS:
 
-- infinite loop of console.logs
+- infinite loop of console.logs xxxx
 - change order to Newest/Oldest when sort is date
 - get user to stay logged in after post
+- sort by
+- flickering when loading articles
 
+TO DO:
+
+- error handling, go to a component for non existent topic etc
+- move components to src
+- merge the upvote/downvote to one
+- extract article-byID
 
 */

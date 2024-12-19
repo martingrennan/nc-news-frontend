@@ -13,10 +13,11 @@ const ArticleCard = ({ article }) => {
       <img
         onClick={submitArticleID}
         className="article-pic"
+        // className="article-links"
         src={article.article_img_url}
         alt="Article"
       />
-      <p onClick={submitArticleID}>{article.title}</p>
+      <p onClick={submitArticleID}         className="article-links">{article.title}</p>
       <p> posted by {article.author}</p>
       <p>{article.votes} votes</p>
       <p>{article.topic}</p>

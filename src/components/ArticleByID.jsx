@@ -3,10 +3,11 @@ import {
   getComments,
   postComment,
   deleteComment,
-} from "../src/api";
+  upvoteArticle, 
+  downvoteArticle
+} from "../api";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { upvoteArticle, downvoteArticle } from "../src/api";
 import CommentCard from "./Comment-Card";
 import { UserContext } from "./UserContext";
 import { useContext } from "react";
@@ -84,7 +85,7 @@ const ArticleByID = () => {
     setInputValue(e.target.value);
     setCommentBody({
       body: e.target.value,
-      author: user.username
+      author: user.username,
       //change this back to user.username
     });
   };
@@ -111,7 +112,9 @@ const ArticleByID = () => {
     deleteComment(commentID)
       .then(() => {
         setComments((currComments) => {
-          return currComments.filter((comment) => comment.comment_id !== commentID);
+          return currComments.filter(
+            (comment) => comment.comment_id !== commentID
+          );
         });
       })
       .catch((err) => {
@@ -121,7 +124,7 @@ const ArticleByID = () => {
   };
 
   return (
-    <>
+    <>      <div className="content">
       <img className="article-pic" src={article.article_img_url}></img>
       <h4>{article.title}</h4>
       <p> posted by {article.author}</p>
@@ -168,10 +171,15 @@ const ArticleByID = () => {
       ) : (
         <ul className="comments-list">
           {comments.map((comment) => (
-            <CommentCard key={comment.comment_id} comment={comment} deleteOwnComment={deleteOwnComment} />
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              deleteOwnComment={deleteOwnComment}
+            />
           ))}
         </ul>
       )}
+      </div>
     </>
   );
 };
