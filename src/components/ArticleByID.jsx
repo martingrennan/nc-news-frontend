@@ -7,7 +7,7 @@ import {
   downvoteArticle
 } from "../api";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, Navigate, useNavigate } from "react-router";
 import CommentCard from "./Comment-Card";
 import { UserContext } from "./UserContext";
 import { useContext } from "react";
@@ -24,6 +24,7 @@ const ArticleByID = () => {
   const [commentBody, setCommentBody] = useState({});
   const [inputValue, setInputValue] = useState("");
   const { articleID } = useParams();
+  const navigate = useNavigate();
 
   //get article by ID
   useEffect(() => {
@@ -32,9 +33,10 @@ const ArticleByID = () => {
       .then((article) => {
         setIsLoading(false);
         setArticle(article[0]);
+        console.log(article[0])
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        navigate("/error")
       });
   }, [articleID]);
 
@@ -46,8 +48,8 @@ const ArticleByID = () => {
         setIsLoading(false);
         setComments(commentsData);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        navigate("/error")
       });
   }, [articleID]);
 
@@ -86,7 +88,6 @@ const ArticleByID = () => {
     setCommentBody({
       body: e.target.value,
       author: user.username,
-      //change this back to user.username
     });
   };
 

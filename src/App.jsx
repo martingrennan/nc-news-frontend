@@ -7,28 +7,11 @@ import LogIn from "./components/LogIn";
 import Navbar from "./components/Navbar";
 import ErrorPage from "./components/ErrorPage";
 import Home from "./components/Home";
-import { getTopics } from "./api";
+
 import { Routes, Route } from "react-router";
-import React, { useState, useEffect } from "react";
+
 
 function App() {
-  const [validTopics, setValidTopics] = useState([]);
-
-  useEffect(() => {
-    getTopics()
-      .then((topics) => {
-        const validTopics = topics.map((topic)=> {
-          return topic.slug
-        })
-        return validTopics
-      })
-      .then((validTopics) => {
-        setValidTopics(validTopics)
-          })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <>
@@ -36,8 +19,8 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/articles" element={<Articles validTopics={validTopics} />} ></Route>
-        <Route path="/articles/:topic" element={<Articles validTopics={validTopics} />}></Route>
+        <Route path="/articles" element={<Articles />} ></Route>
+        <Route path="/articles/:topic" element={<Articles />}></Route>
         <Route
           path="/article-by-id/:articleID"
           element={<ArticleByID />}

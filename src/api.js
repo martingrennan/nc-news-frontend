@@ -15,13 +15,19 @@ export const getArticles = (topic, sort_by, order, p) => {
 export const getArticleByID = (articleID) => {
   return api.get(`/articles/${articleID}`).then(({ data }) => {
     return data.articles;
-  });
+  })
+  // .catch((err) => {
+  //   console.log(err)
+  // })
 };
 
 export const getComments = (articleID) => {
   return api.get(`/articles/${articleID}/comments`).then(({ data }) => {
     return data.comments;
-  });
+  })
+  // .catch((err) => {
+  //   console.log(err)
+  // })
 };
 
 export const upvoteArticle = (articleID) => {

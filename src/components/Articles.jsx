@@ -3,7 +3,7 @@ import ArticleCard from "./Article-Card";
 import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams, Navigate } from "react-router";
 
-const Articles = ({validTopics}) => {
+const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState("");
@@ -17,17 +17,10 @@ const Articles = ({validTopics}) => {
       .then((articles) => {
         setArticles(articles);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        return <Navigate to="/error"/>
       });
   }, [topic, sortBy, order, p]);
-
-  validTopics.push(undefined)
-
-  if (!validTopics.includes(topic)) {
-    console.log('error')
-    return <Navigate to="/error"/>
-  }
 
   const handleSortChange = (e) => {
     const { name, value } = e.target;
