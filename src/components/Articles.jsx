@@ -1,9 +1,9 @@
 import { getArticles } from "../api";
 import ArticleCard from "./Article-Card";
 import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router";
+import { useParams, useSearchParams, Navigate } from "react-router";
 
-const Articles = () => {
+const Articles = ({validTopics}) => {
   const [articles, setArticles] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState("");
@@ -21,6 +21,13 @@ const Articles = () => {
         console.log(err);
       });
   }, [topic, sortBy, order, p]);
+
+  validTopics.push(undefined)
+
+  if (!validTopics.includes(topic)) {
+    console.log('error')
+    return <Navigate to="/error"/>
+  }
 
   const handleSortChange = (e) => {
     const { name, value } = e.target;
@@ -102,5 +109,3 @@ const Articles = () => {
 };
 
 export default Articles;
-
-// !lastPage &&
