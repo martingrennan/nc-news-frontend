@@ -33,14 +33,19 @@ const Navbar = () => {
 
   return (
     <>
+    <div class="parent">
     <nav className="navbar">
       <Link to="">
         <button>Home</button>
       </Link>
+      <br></br>
       <Link to="/articles">
         <button>View all articles</button>
       </Link>
+      <br></br>
       <label htmlFor="topic-dropdown">Search by topics </label>
+      <br></br>
+      
       <select
         id="topic-dropdown"
         name="topic-dropdown"
@@ -64,6 +69,7 @@ const Navbar = () => {
       )}
       <br></br>
       </nav>
+      </div>
     </>
   );
 };

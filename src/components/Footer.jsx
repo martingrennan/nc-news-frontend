@@ -1,9 +1,13 @@
 const Footer = () => {
-    return (
-        <>
-              <h5>contact us</h5>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="parent">
+        <div className="footer">
+          <h5>contact us</h5>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default Footer
+export default Footer;

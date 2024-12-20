@@ -9,20 +9,26 @@ const ArticleCard = ({ article }) => {
   };
 
   return (
-    <div>
-      <img
-        onClick={submitArticleID}
-        className="article-pic"
-        // className="article-links"
-        src={article.article_img_url}
-        alt="Article"
-      />
-      <p onClick={submitArticleID}         className="article-links">{article.title}</p>
-      <p> posted by {article.author}</p>
-      <p>{article.votes} votes</p>
-      <p>{article.topic}</p>
-      <p>{article.comment_count} comments</p>
-    </div>
+    <>
+      <div class="card" onClick={submitArticleID}>
+        <div class="bg">
+          <img
+            onClick={submitArticleID}
+            className="article-pic"
+            src={article.article_img_url}
+            alt="Article"
+          />
+          <h3 onClick={submitArticleID} className="article-links">
+            {article.title}
+          </h3>
+          <p class> posted by {article.author}</p>
+          <p>{article.votes} votes</p>
+          <p>{article.topic}</p>
+          <p>{article.comment_count} comments</p>
+        </div>
+        <div class="blob"></div>
+      </div>
+    </>
   );
 };
 

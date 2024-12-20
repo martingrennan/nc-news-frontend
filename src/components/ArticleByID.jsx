@@ -3,8 +3,8 @@ import {
   getComments,
   postComment,
   deleteComment,
-  upvoteArticle, 
-  downvoteArticle
+  upvoteArticle,
+  downvoteArticle,
 } from "../api";
 import { useState, useEffect } from "react";
 import { useParams, Navigate, useNavigate } from "react-router";
@@ -33,10 +33,10 @@ const ArticleByID = () => {
       .then((article) => {
         setIsLoading(false);
         setArticle(article[0]);
-        console.log(article[0])
+        console.log(article[0]);
       })
       .catch(() => {
-        navigate("/error")
+        navigate("/error");
       });
   }, [articleID]);
 
@@ -49,7 +49,7 @@ const ArticleByID = () => {
         setComments(commentsData);
       })
       .catch(() => {
-        navigate("/error")
+        navigate("/error");
       });
   }, [articleID]);
 
@@ -125,61 +125,64 @@ const ArticleByID = () => {
   };
 
   return (
-    <>      <div className="content">
-      <img className="article-pic" src={article.article_img_url}></img>
-      <h4>{article.title}</h4>
-      <p> posted by {article.author}</p>
-      <p>{article.votes + voteChange} votes</p>
-      <button onClick={handleDownvoteArticle}>➖</button>
-      <button onClick={handleUpvoteArticle}>➕</button>
-      {noInternet === true ? <p>No internet connection!</p> : null}
-      <p>{article.topic}</p>
-      <h4>{article.comment_count} comments</h4>
-      <form>
-        {user === null ? (
-          <h4>Please log in to add a comment</h4>
-        ) : (
-          <>
-            <h4>Add a new comment</h4>
-            <label htmlFor="message">
-              Message: <br></br>
-            </label>
-            <br></br>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              cols="50"
-              value={inputValue}
-              onChange={handleCommentTyping}
-              placeholder="Write your comment here..."
-              required
-            ></textarea>
-            <br></br>
-            <button
-              type="submit"
-              onClick={handleSubmitComment}
-              disabled={isPosting}
-            >
-              {isPosting === true ? "Posting..." : "Post Comment"}
-            </button>
-          </>
-        )}
-      </form>
+    <>
+      <div className="parent">
+        <div className="content">
+          <img className="article-pic" src={article.article_img_url}></img>
+          <h4>{article.title}</h4>
+          <p> posted by {article.author}</p>
+          <p>{article.votes + voteChange} votes</p>
+          <button onClick={handleDownvoteArticle}>➖</button>
+          <button onClick={handleUpvoteArticle}>➕</button>
+          {noInternet === true ? <p>No internet connection!</p> : null}
+          <p>{article.topic}</p>
+          <h4>{article.comment_count} comments</h4>
+          <form>
+            {user === null ? (
+              <h4>Please log in to add a comment</h4>
+            ) : (
+              <>
+                <h4>Add a new comment</h4>
+                <label htmlFor="message">
+                  Message: <br></br>
+                </label>
+                <br></br>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  cols="50"
+                  value={inputValue}
+                  onChange={handleCommentTyping}
+                  placeholder="Write your comment here..."
+                  required
+                ></textarea>
+                <br></br>
+                <button
+                  type="submit"
+                  onClick={handleSubmitComment}
+                  disabled={isPosting}
+                >
+                  {isPosting === true ? "Posting..." : "Post Comment"}
+                </button>
+              </>
+            )}
+          </form>
 
-      {comments.length === 0 ? (
-        <p>No comments to display</p>
-      ) : (
-        <ul className="comments-list">
-          {comments.map((comment) => (
-            <CommentCard
-              key={comment.comment_id}
-              comment={comment}
-              deleteOwnComment={deleteOwnComment}
-            />
-          ))}
-        </ul>
-      )}
+          {comments.length === 0 ? (
+            <p>No comments to display</p>
+          ) : (
+            <ul className="comments-list">
+              {comments.map((comment) => (
+                <CommentCard
+                  key={comment.comment_id}
+                  comment={comment}
+                  deleteOwnComment={deleteOwnComment}
+                />
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </>
   );

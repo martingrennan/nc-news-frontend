@@ -46,6 +46,8 @@ const LogIn = () => {
 
   return (
     <>
+    <div className="parent">
+      <div className="content">
       <form>
         <br></br>
         <label htmlFor="username">Enter your username to log in: </label>
@@ -66,6 +68,8 @@ const LogIn = () => {
           </>
         )}
       </form>
+      </div>
+      </div>
     </>
   );
 };

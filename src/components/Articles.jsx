@@ -55,6 +55,7 @@ const Articles = () => {
   return (
     <>
       <br />
+      <div className="parent">
       <div className="content">
       <label htmlFor="sort-dropdown">Sort articles</label>
       <select id="sort-dropdown" name="sort_by" onChange={handleSortChange}>
@@ -95,6 +96,7 @@ const Articles = () => {
             {articles.length === itemsPerPage && <button onClick={pageUp}>Next page</button>}
           </>
         )}
+      </div>
       </div>
       </div>
     </>
